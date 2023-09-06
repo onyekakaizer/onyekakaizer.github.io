@@ -1,0 +1,182 @@
+  
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+  import { getDatabase, set, get, ref ,query, child, onValue, limitToFirst, orderByChild,equalTo } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
+
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyA119qRhafASuNkPhozMqcrW1LmR6RNYm0",
+    authDomain: "upload-image-bdd34.firebaseapp.com",
+    projectId: "upload-image-bdd34",
+    storageBucket: "upload-image-bdd34.appspot.com",
+    messagingSenderId: "789533799147",
+    appId: "1:789533799147:web:4e05b0d70b24737b1c84ae"
+  };
+  
+  //var firebase = initializeApp(firebaseConfig);
+  //console.log(firebase);
+
+  const app = initializeApp(firebaseConfig);
+  console.log(app);
+  // Get a reference to the database service
+  const db = getDatabase();
+  
+  function getAllStaffers(){
+    getParameters();
+      var status = 1;
+      const que = query(ref(db,'staff'),orderByChild('status'),equalTo(status));
+
+      get(que).then((snapshot) => {
+        if (snapshot.exists()) {
+
+          var staffers = [];
+
+          snapshot.forEach(function (childSnapshot) {
+
+            staffers.push(childSnapshot.val());
+
+        });
+
+        addStaffersForDisplay(staffers);
+
+        //console.log(snapshot.val().name);
+        } else {
+          alert("Error: No User already added");
+        }
+      }).catch((error) => {
+        console.error(error);
+      });
+	
+							
+}
+
+window.onload = getAllStaffers();
+
+function  addStaffersForDisplay(staffers){
+    staffers.forEach(element => {
+
+    sendToDisplay(element.sn, element.department,element.email, element.faculty, 
+        element.firstname, element.lastname, element.loginkey, element.password, element.staffno, element.status);
+
+  });
+}
+
+
+
+function getParameters(){
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+
+    const lastname = urlParams.get('lastname');
+    const firstname = urlParams.get('firstname');
+    const email = urlParams.get('email');
+
+    document.getElementById("names").innerHTML = lastname +" "+ firstname;
+    //document.getElementById("u_email").innerHTML = 'Email : ' + u_email;
+    //document.getElementById("u_phone").innerHTML = 'Phone : ' + u_phone;
+    //document.getElementById("u_address").innerHTML = 'Address : ' + u_address;
+    //alert(id);
+    }
+
+
+var staffers_div = document.getElementById('staffers_div');
+//var bg_white = document.getElementById('bg_white');
+
+var radioId = 1;
+
+function sendToDisplay(sn, department,email, faculty, firstname, lastname, loginkey, 
+    password, staffno, status){
+
+
+        let text_darkA = document.createElement('a');
+        text_darkA.classList.add ('text-dark');
+        text_darkA.setAttribute("href", 'stud_councillorprofileview.html?sn='+sn+'&department='+department+'&email='+email+'&faculty='
+               +faculty+'&firstname='+firstname+'&lastname='+lastname+'&staffno='+staffno);
+
+        let osahan_gift_card_item1Div = document.createElement('div');
+        osahan_gift_card_item1Div.classList.add ('osahan-gift', 'card_item1', 'align-items-center', 'row', 'm-0', 'bg-white', 'shadow-sm', 'border-rad8', 'mb-3', 'align-items-center');
+
+
+        let pl_3_py_3_py_3Div = document.createElement('div');
+        pl_3_py_3_py_3Div.classList.add ('pl-3', 'py-3', 'py-3', 'd-flex', 'border-0');
+
+        let img_fluid = document.createElement("img");
+        img_fluid.src = "img/avatar.png";
+        img_fluid.classList.add ('img-fluid', 'm-auto');
+
+        pl_3_py_3_py_3Div.appendChild(img_fluid);
+
+
+        let pl_3_py_3Div = document.createElement('div');
+        pl_3_py_3Div.classList.add ('pl-3', 'py-3');
+
+        
+        let gift_cardDiv = document.createElement('div');
+        gift_cardDiv.classList.add ('gift-card');
+
+        let l_hght_18H6 = document.createElement('h6');
+        l_hght_18H6.classList.add ('l-hght-18','pt-6');
+
+        let h6_Text = document.createTextNode(firstname +" "+lastname);
+        l_hght_18H6.appendChild(h6_Text);
+
+        gift_cardDiv.appendChild(l_hght_18H6);
+
+
+        let mt_2_pb_1Div = document.createElement('div');
+        mt_2_pb_1Div.classList.add ('mt-2', 'pb-1');
+
+        let small_mb_0P = document.createElement("p");
+        small_mb_0P.classList.add ('small', 'mb-0', 'l-hght-10', 'text-warning', 'gift-code');
+
+
+        let node = document.createTextNode("Book Appointment");
+        small_mb_0P.appendChild(node);
+
+
+        let icofont_ui_copyitalics = document.createElement('i');
+        icofont_ui_copyitalics.classList.add ('icofont-ui-copy');
+
+
+        small_mb_0P.appendChild(icofont_ui_copyitalics);
+
+        mt_2_pb_1Div.appendChild(small_mb_0P);
+
+        pl_3_py_3Div.appendChild(gift_cardDiv);
+        pl_3_py_3Div.appendChild(mt_2_pb_1Div);
+
+
+
+        osahan_gift_card_item1Div.appendChild(pl_3_py_3_py_3Div);
+        osahan_gift_card_item1Div.appendChild(pl_3_py_3Div);
+
+
+
+        text_darkA.appendChild(osahan_gift_card_item1Div);
+        staffers_div.appendChild(text_darkA);
+
+
+  //var el = document.getElementById('hiddenID'+radioId);
+  //var el2 = document.getElementById('label'+radioId);
+  //console.log(el.innerText);
+
+
+//   el2.addEventListener("click", function(){
+   
+//       //console.log(el.value);
+//       window.open('userdetails.html?u_id='+u_id+'&u_surname='+u_surname+'&u_lastname='+u_lastname+'&u_middlename='
+//       +u_middlename+'&u_email='+u_email+'&u_phone='+u_phone+'&u_state='+u_state+'&u_address='+u_address
+//       +'&u_level='+u_level+'&date_registered='+date_registered, "_self");
+//     }
+//   )
+//   radioId = radioId+1;
+
+}
+
+
+
+
+
