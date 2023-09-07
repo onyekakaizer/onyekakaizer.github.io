@@ -197,13 +197,10 @@ function getAppointments(){
 
           childSnapshot.forEach(function (childSnapshot2) {
 
-            childSnapshot2.forEach(function (childSnapshot3) {
-
-              appointments.push(childSnapshot3.val());
-              console.log(childSnapshot3.val());
-    
-          });
-
+          if(childSnapshot2.val().regno == sessregno){
+              appointments.push(childSnapshot2.val());
+              console.log(childSnapshot2.val().regno);
+          }
 
   
         });
@@ -229,8 +226,7 @@ function getAppointments(){
 function  getAppointmentsForDisplay(appointments){
   appointments.forEach(element => {
 
-    sendToAppointListDisplay(element.sn, element.student,element.dates, element.time, 
-      element.app_status, element.status);
+    sendToAppointListDisplay(element.sn, element.student,element.dates, element.time, element.status);
 
 });
 }
@@ -239,8 +235,7 @@ function  getAppointmentsForDisplay(appointments){
 var appointlist = document.getElementById('appointlist');
 //var bg_white = document.getElementById('bg_white');
 
-function sendToAppointListDisplay(sn, department,email, faculty, firstname, lastname, loginkey, 
-  password, staffno, status){
+function sendToAppointListDisplay(sn, student,dates, time, status){
 
 
     let messenger_bg_warningDiv = document.createElement('div');
