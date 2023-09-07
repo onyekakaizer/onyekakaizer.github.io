@@ -25,8 +25,8 @@
   const db = getDatabase();
 
 
-  function  writeStudentData(firstname,lastname,email,staffno,faculty,department,password) {
-    console.log("queuuuuuuuuuuuuuuu");
+  function  writeStudentData(titles,firstname,lastname,email,staffno,password) {
+    //console.log("queuuuuuuuuuuuuuuu");
         const dates = new Date();
         var dateToString = dates.toString()
         var uid = md5(dateToString);
@@ -48,12 +48,11 @@
 
     set(ref(db, 'staff/' + staffno), {
         sn:uid,
+        title:titles,
         firstname:firstname,
         lastname:lastname,
         email:email,
         staffno:staffno,
-        department:department,
-        faculty:faculty,
         password:password,
         loginkey:loginkey,
         status:1
@@ -70,15 +69,18 @@
 
   saveBtn.addEventListener('click', ()=>{ 
     
+    
+  var titles  = document.getElementById("titles").value;
   var firstname  = document.getElementById("firstname").value;
   var lastname  = document.getElementById("lastname").value;
   var email  = document.getElementById("email").value;
   var staffno  = document.getElementById("staffno").value;
-  var faculty  = document.getElementById("faculty").value;
-  var department  = document.getElementById("department").value;
   var password  = document.getElementById("password").value;
   var cpassword  = document.getElementById("cpassword").value;
 
+  if(titles == ""){
+    alert("Error: Please Select Title");
+  }
   if(firstname == ""){
     alert("Error: Please Insert First Name");
   }
@@ -90,12 +92,6 @@
   }
   else if(staffno == ""){
     alert("Error: Please Insert Reg Number");
-  }
-  else if(faculty == ""){
-    alert("Error: Please Select Faculty");
-  }
-  else if(department == ""){
-    alert("Error: Please Select Department");
   }
   else if(password == ""){
     alert("Error: Please Insert Password");
@@ -117,7 +113,7 @@
       //console.log(snapshot.val().name);
       } else {
         
-        writeStudentData(firstname,lastname,email,staffno,faculty,department,password);
+        writeStudentData(titles,firstname,lastname,email,staffno,password);
             
       }
     }).catch((error) => {

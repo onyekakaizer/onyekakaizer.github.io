@@ -140,6 +140,93 @@ function sendToDisplay(sn, student,dates, time, app_status, status){
 }
 
 
+// var scheduleAppointment = document.getElementById(scheduleAppointment);
+
+// scheduleAppointment.addEventListener("click", function(){
+    
+//       console.log("scheduleAppointment.value");
+//      // window.open('reptransactionlist.html?rep_id='+rep_id+'&rep_name='+rep_name, "_self");
+
+//     }
+//   )
+
+document.getElementById("sAppointment").onclick = function() {  
+
+    var appointTime = document.getElementById("appointTime").value;
+
+    console.log(appointTime);
+
+    if(appointTime == ''){
+        alert("Please Select Time");
+        
+    }
+    else{
+
+        scheduleAppointment(appointTime) ;
+    }
+
+    
+    }; 
+
+function scheduleAppointment(appointTime){
+    
+    var regno = sessionStorage.getItem("regno");
+    console.log(regno);
+
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+
+    const appdate = urlParams.get('appdate');
+
+    //console.log(appdate+"lll");
+
+    const que = query(ref(db,'appointments/'+appdate+'/'+appointTime));
+
+    // console.log(que);
+
+    get(que).then((snapshot) => {
+      if (snapshot.exists()) {
+
+        alert("Error: Appointment Period Already Taken");
+
+      //console.log(snapshot.val().name);
+      } else {
+
+        var sessfirstname = sessionStorage.getItem("firstname");
+        var sesslastname= sessionStorage.getItem("lastname");
+        var sessregno= sessionStorage.getItem("regno");
+        
+        scheduleAppoint(sessfirstname,sesslastname,sessregno,appdate,appointTime);
+            
+      }
+    }).catch((error) => {
+      console.error(error);
+    });
+
+
+
+}
+
+
+function scheduleAppoint(sessfirstname,sesslastname,sessregno,appdate,appointTime){
+    
+    set(ref(db, 'appointments/' + appdate+'/'+appointTime), {
+        sn:1,
+        student:sessfirstname+sesslastname,
+        time:appointTime,
+        dates:appdate,
+        regno:sessregno,
+        status:1
+    }).then(()=>{
+        alert("Appointment Scheduled Successfully");
+        window.open('appointfromdate.html?appdate='+appdate, "_self");
+    }).catch(()=>{
+        alert("Error: Student Not Successfully Added");
+    });
+
+}
+
+
 
 
 

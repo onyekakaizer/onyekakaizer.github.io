@@ -25,7 +25,7 @@
   const db = getDatabase();
 
 
-  function  writeStudentData(firstname,lastname,email,regno,faculty,department,programme,password) {
+  function  writeStudentData(firstname,lastname,email,phone,regno,faculty,department,programme,password) {
     //console.log("queuuuuuuuuuuuuuuu");
         const dates = new Date();
         var dateToString = dates.toString()
@@ -51,6 +51,7 @@
         firstname:firstname,
         lastname:lastname,
         email:email,
+        phone:phone,
         regno:regno,
         department:department,
         programme:programme,
@@ -74,6 +75,7 @@
   var firstname  = document.getElementById("firstname").value;
   var lastname  = document.getElementById("lastname").value;
   var email  = document.getElementById("email").value;
+  var phone  = document.getElementById("phone").value;
   var regno  = document.getElementById("regno").value;
   var faculty  = document.getElementById("faculty").value;
   var department  = document.getElementById("department").value;
@@ -89,6 +91,9 @@
   }
   else if(email == ""){
     alert("Error: Please Insert Email Address");
+  }
+  else if(phone == ""){
+    alert("Error: Please Insert Phone Number");
   }
   else if(regno == ""){
     alert("Error: Please Insert Reg Number");
@@ -122,7 +127,7 @@
       //console.log(snapshot.val().name);
       } else {
         
-        writeStudentData(firstname,lastname,email,regno,faculty,department,programme,password);
+        writeStudentData(firstname,lastname,email,phone,regno,faculty,department,programme,password);
             
       }
     }).catch((error) => {

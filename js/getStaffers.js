@@ -26,6 +26,7 @@
   
   function getAllStaffers(){
     getParameters();
+    getAppointments();
       var status = 1;
       const que = query(ref(db,'staff'),orderByChild('status'),equalTo(status));
 
@@ -159,20 +160,118 @@ function sendToDisplay(sn, department,email, faculty, firstname, lastname, login
         staffers_div.appendChild(text_darkA);
 
 
-  //var el = document.getElementById('hiddenID'+radioId);
-  //var el2 = document.getElementById('label'+radioId);
-  //console.log(el.innerText);
+}
 
 
-//   el2.addEventListener("click", function(){
-   
-//       //console.log(el.value);
-//       window.open('userdetails.html?u_id='+u_id+'&u_surname='+u_surname+'&u_lastname='+u_lastname+'&u_middlename='
-//       +u_middlename+'&u_email='+u_email+'&u_phone='+u_phone+'&u_state='+u_state+'&u_address='+u_address
-//       +'&u_level='+u_level+'&date_registered='+date_registered, "_self");
-//     }
-//   )
-//   radioId = radioId+1;
+
+
+function getAppointments(){
+
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+
+  const appdate = urlParams.get('appdate');
+  var sessregno= sessionStorage.getItem("regno");
+  console.log(sessregno);
+
+
+  
+
+  // if(appdate == ""){
+  //     console.log("Empty");
+  //     alert("Error: Please Select a Date");
+  //     window.open("javascript:history.back()", "_self");
+  // }
+  // else{
+
+  //getParameters();
+    var status = 1;
+    const que = query(ref(db,'appointments'));
+
+    get(que).then((snapshot) => {
+      if (snapshot.exists()) {
+
+        var appointments = [];
+
+        snapshot.forEach(function (childSnapshot) {
+
+          childSnapshot.forEach(function (childSnapshot2) {
+
+            childSnapshot2.forEach(function (childSnapshot3) {
+
+              appointments.push(childSnapshot3.val());
+              console.log(childSnapshot3.val());
+    
+          });
+
+
+  
+        });
+
+
+
+      });
+
+      getAppointmentsForDisplay(appointments);
+
+      //console.log(snapshot.val().name);
+      } else {
+        alert("Error: No Appointment already added");
+      }
+    }).catch((error) => {
+      console.error(error);
+    });
+
+            
+}
+
+
+function  getAppointmentsForDisplay(appointments){
+  appointments.forEach(element => {
+
+    sendToAppointListDisplay(element.sn, element.student,element.dates, element.time, 
+      element.app_status, element.status);
+
+});
+}
+
+
+var appointlist = document.getElementById('appointlist');
+//var bg_white = document.getElementById('bg_white');
+
+function sendToAppointListDisplay(sn, department,email, faculty, firstname, lastname, loginkey, 
+  password, staffno, status){
+
+
+    let messenger_bg_warningDiv = document.createElement('div');
+    messenger_bg_warningDiv.classList.add ('messenger', 'bg-warning', 'shadow-sm', 'p-3', 'd-flex', 'align-items-center', 'rounded-1', 'mb-2');
+
+    let icofont_support_mr_3italics = document.createElement('i');
+    icofont_support_mr_3italics.classList.add ('icofont-support', 'mr-3', 'h5', 'mb-0', 'text-danger');
+
+    messenger_bg_warningDiv.appendChild(icofont_support_mr_3italics);
+
+    let mb_small_0P = document.createElement("p");
+    mb_small_0P.classList.add ('small', 'mb-0');
+
+
+    let timenode = document.createTextNode(time);
+    mb_small_0P.appendChild(timenode);
+
+    let br = document.createElement("br");
+    mb_small_0P.appendChild(br);
+
+
+    let appointeenode = document.createTextNode("Scheduled By : "+student);
+    mb_small_0P.appendChild(appointeenode);
+
+
+    messenger_bg_warningDiv.appendChild(mb_small_0P);
+
+
+    appointlist.appendChild(messenger_bg_warningDiv);
+
+
 
 }
 

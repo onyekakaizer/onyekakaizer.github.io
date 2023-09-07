@@ -60,6 +60,7 @@
             var firstname = childSnapshot.val().firstname;
             var lastname = childSnapshot.val().lastname;
             var email = childSnapshot.val().email;
+            var regno = childSnapshot.val().regno;
 
             console.log(lastname);
 
@@ -67,6 +68,9 @@
 
               sessionStorage.setItem("key", loginkey);
               //sessionStorage.setItem("u_level", u_level);
+              sessionStorage.setItem("firstname", firstname);
+              sessionStorage.setItem("lastname", lastname);
+              sessionStorage.setItem("regno", regno);
 
               window.open('studentcp.html?firstname='+firstname+'&lastname='+lastname+'&email='+email, "_self");
 
