@@ -59,9 +59,10 @@
         loginkey:loginkey,
         status:1
     }).then(()=>{
-        alert("User Account Created Successfully");
+        alert("Student Account Created Successfully");
+        window.open('login.html', "_self");
     }).catch(()=>{
-        alert("Error: User Not Successfully Added");
+        alert("Error: Student Not Successfully Added");
     });
   }
 
