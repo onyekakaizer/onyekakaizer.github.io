@@ -25,7 +25,7 @@
   const db = getDatabase();
 
 
-  function  writeStudentData(firstname,lastname,email,regno,faculty,department,password) {
+  function  writeStudentData(firstname,lastname,email,regno,faculty,department,programme,password) {
     //console.log("queuuuuuuuuuuuuuuu");
         const dates = new Date();
         var dateToString = dates.toString()
@@ -53,6 +53,7 @@
         email:email,
         regno:regno,
         department:department,
+        programme:programme,
         faculty:faculty,
         password:password,
         loginkey:loginkey,
@@ -75,6 +76,7 @@
   var regno  = document.getElementById("regno").value;
   var faculty  = document.getElementById("faculty").value;
   var department  = document.getElementById("department").value;
+  var programme  = document.getElementById("programme").value;
   var password  = document.getElementById("password").value;
   var cpassword  = document.getElementById("cpassword").value;
 
@@ -96,6 +98,9 @@
   else if(department == ""){
     alert("Error: Please Select Department");
   }
+  else if(programme == ""){
+    alert("Error: Please Select Programme");
+  }
   else if(password == ""){
     alert("Error: Please Insert Password");
   }
@@ -116,7 +121,7 @@
       //console.log(snapshot.val().name);
       } else {
         
-        writeStudentData(firstname,lastname,email,regno,faculty,department,password);
+        writeStudentData(firstname,lastname,email,regno,faculty,department,programme,password);
             
       }
     }).catch((error) => {
