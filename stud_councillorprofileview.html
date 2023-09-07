@@ -109,7 +109,14 @@ Counsellor
 <script type="text/javascript">
   document.getElementById("checkAppointments").onclick = function () {
     let apDate = document.getElementById("appointDate").value;
+
+    if(apDate == ""){
+        console.log("Empty");
+        alert("Error: Please Select a Date");
+    }
+    else{
       location.href = "appointfromdate.html?appdate="+apDate;
+    }
   };
 </script>
 
