@@ -125,7 +125,7 @@ function sendToDisplay(sn, student,dates, time, app_status, status){
     mb_small_0P.appendChild(br);
 
 
-    let appointeenode = document.createTextNode(student);
+    let appointeenode = document.createTextNode("Scheduled By : "+student);
     mb_small_0P.appendChild(appointeenode);
 
 
