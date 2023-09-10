@@ -33,11 +33,6 @@
       window.open("login.html", "_self");
    }
 
-   let snN;
-   let fN;
-   let lN;
-   let tN;
-
    function getParameters(){
          const queryString = window.location.search;
          const urlParams = new URLSearchParams(queryString);
@@ -49,15 +44,10 @@
          const firstname = urlParams.get('firstname');
          const lastname = urlParams.get('lastname');
          const staffno = urlParams.get('staffno');
-         const title = urlParams.get('title');
 
-         document.getElementById("coun_name").innerHTML = title +" "+firstname +" "+ lastname;
+         document.getElementById("coun_name").innerHTML = firstname +" "+ lastname;
          document.getElementById("coun_email").innerHTML = 'Email : ' + email;
-
-          snN = sn;
-          fN = firstname;
-          lN = lastname;
-          tN = title;
+         document.getElementById("faculty").innerHTML = 'Faculty : ' + faculty;
          
          }
 
@@ -98,6 +88,10 @@ Counsellor
   <h6 class="font-weight-bold l-hght-18 pt-2" id="coun_name"></h6>
   <span class="text-white-50 small" id="coun_email"></span>
   </div>
+  <div class="mt-2 pb-1">
+  <span class="f-12" id="faculty"></span>
+
+  </div>
   </div>
   </div>
   </a>
@@ -121,8 +115,7 @@ Counsellor
         alert("Error: Please Select a Date");
     }
     else{
-      location.href = "appointfromdate.html?appdate="+apDate+'&sn='+snN+'&firstname='+fN+'&lastname='+lN+'&title='+tN;
-      
+      location.href = "appointfromdate.html?appdate="+apDate;
     }
   };
 </script>

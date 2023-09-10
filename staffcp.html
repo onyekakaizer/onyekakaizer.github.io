@@ -19,7 +19,6 @@
 <link href="css/custom.css" rel="stylesheet">
 
 <link href="vendor/sidebar/demo.css" rel="stylesheet">
-<script src="js/getStaffers.js" type="module"></script>
 <script>
          
     if(sessionStorage.getItem("key")  == null){
@@ -33,45 +32,17 @@
       window.open("login.html", "_self");
    }
 
-   let snN;
-   let fN;
-   let lN;
-   let tN;
-
-   function getParameters(){
-         const queryString = window.location.search;
-         const urlParams = new URLSearchParams(queryString);
-
-         const sn = urlParams.get('sn');
-         const department = urlParams.get('department');
-         const email = urlParams.get('email');
-         const faculty = urlParams.get('faculty');
-         const firstname = urlParams.get('firstname');
-         const lastname = urlParams.get('lastname');
-         const staffno = urlParams.get('staffno');
-         const title = urlParams.get('title');
-
-         document.getElementById("coun_name").innerHTML = title +" "+firstname +" "+ lastname;
-         document.getElementById("coun_email").innerHTML = 'Email : ' + email;
-
-          snN = sn;
-          fN = firstname;
-          lN = lastname;
-          tN = title;
-         
-         }
-
 
    
 </script>
 </head>
-<body class="bg-light"  onLoad="getParameters()">
+<body class="bg-light">
 
 <div class="osahan-giftcard">
 <div class="osahan-header-nav shadow-sm bg-danger p-3 d-flex align-items-center">
 <h5 class="font-weight-normal mb-0 text-white">
 <a class="text-danger mr-3" href="javascript:history.back()"><i class="icofont-rounded-left"></i></a>
-Counsellor
+Counsellor Home
 </h5>
 <div class="ml-auto d-flex align-items-center">
 <a class="toggle osahan-toggle h4 m-0 text-white ml-auto" href="#"><i class="icofont-navigation-menu"></i></a>
@@ -80,52 +51,28 @@ Counsellor
 <div class="osahan-giftcard p-3">
 
 
+<div class="osahan-gift card_item1 align-items-center row m-0 bg-white shadow-sm border-rad8 mb-3 align-items-center">
 
-<div class="osahan-gift card_item2 align-items-center row m-0 border bg-white shadow-sm border-rad8 mb-3 align-items-center">
 <div class="pl-3 py-3">
 <div class="gift-card">
-<h4 class="mb-1 font-weight-bold text-danger l-hght-18 pt-2">Counsellor</h4>
+<h4 class="mb-1 font-weight-bold l-hght-18 pt-2" id="welcomemessage">Welcome Back</h4>
+<span class="text-white " id="names"></span>
 </div>
 </div>
 </div>
-<a href="bus-details.html" class="text-dark">
-  <div class="osahan-gift card_item1 align-items-center row m-0 bg-white shadow-sm border-rad8 mb-3 align-items-center">
-  <div class="pl-3 py-3 py-3 d-flex border-0">
-  <img src="img/avatar.png" class="img-fluid m-auto">
-  </div>
+
+<div class="px-3 py-4">
   <div class="pl-3 py-3">
   <div class="gift-card">
-  <h6 class="font-weight-bold l-hght-18 pt-2" id="coun_name"></h6>
-  <span class="text-white-50 small" id="coun_email"></span>
+  <h6 class="mb-1 font-weight-bold text-danger l-hght-18 pt-2">Appointments</h6><hr>
   </div>
-  </div>
-  </div>
-  </a>
-
-<div class="form-group">
-  <label class="mb-1 font-weight-bold text-danger l-hght-18 pt-2"><span class="icofont-ui-calendar text-danger"></span> Select Date</label><br>
-  <input type="date" id="appointDate" name="appointDate" class="form-control">
-</div>
-<button type="submit" class="btn btn-danger btn-block osahanbus-btn mb-4 rounded-1" id="checkAppointments">Check For Appointments</button>
-</div>
 </div>
 
-
-
-<script type="text/javascript">
-  document.getElementById("checkAppointments").onclick = function () {
-    let apDate = document.getElementById("appointDate").value;
-
-    if(apDate == ""){
-        console.log("Empty");
-        alert("Error: Please Select a Date");
-    }
-    else{
-      location.href = "appointfromdate.html?appdate="+apDate+'&sn='+snN+'&firstname='+fN+'&lastname='+lN+'&title='+tN;
-      
-    }
-  };
-</script>
+  <div id="appointlist">
+  </div>
+  </div>
+</div>
+</div>
 
 <nav id="main-nav">
   <ul class="second-nav">
@@ -159,11 +106,7 @@ Counsellor
 <script type="43a4018eeb265916ae64c8a8-text/javascript" src="vendor/sidebar/hc-offcanvas-nav.js"></script>
 
 <script src="js/custom.js" type="43a4018eeb265916ae64c8a8-text/javascript"></script>
-<script>
-  document.getElementById("rangeto").valueAsDate = new Date();
-  document.getElementById("rangefrom").valueAsDate = new Date();
-</script>
-<script src="js/getStaffers.js" type="module"></script>
+<script src="js/getCounsellors.js" type="module"></script>
 <script src="cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="43a4018eeb265916ae64c8a8-|49" defer></script><script defer src="https://static.cloudflareinsights.com/beacon.min.js/v8b253dfea2ab4077af8c6f58422dfbfd1689876627854" integrity="sha512-bjgnUKX4azu3dLTVtie9u6TKqgx29RBwfj3QXYt5EKfWM/9hPSAI/4qcV5NACjwAo8UtTeWefx6Zq5PHcMm7Tg==" data-cf-beacon='{"rayId":"801659bd1ee20b77","version":"2023.8.0","r":1,"b":1,"token":"dd471ab1978346bbb991feaa79e6ce5c","si":100}' crossorigin="anonymous"></script>
 </body>
 
