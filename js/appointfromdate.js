@@ -177,6 +177,10 @@ function scheduleAppointment(appointTime){
     const urlParams = new URLSearchParams(queryString);
 
     const appdate = urlParams.get('appdate');
+    const coun_sn = urlParams.get('sn');
+    const coun_title = urlParams.get('title');
+    const coun_firstname = urlParams.get('firstname');
+    const coun_lastname = urlParams.get('lastname');
 
     //console.log(appdate+"lll");
 
@@ -195,8 +199,9 @@ function scheduleAppointment(appointTime){
         var sessfirstname = sessionStorage.getItem("firstname");
         var sesslastname= sessionStorage.getItem("lastname");
         var sessregno= sessionStorage.getItem("regno");
+        var sessemail= sessionStorage.getItem("email");
         
-        scheduleAppoint(sessfirstname,sesslastname,sessregno,appdate,appointTime);
+        scheduleAppoint(sessemail,sessfirstname,sesslastname,sessregno,appdate,appointTime,coun_sn,coun_title,coun_firstname,coun_lastname);
             
       }
     }).catch((error) => {
@@ -208,18 +213,23 @@ function scheduleAppointment(appointTime){
 }
 
 
-function scheduleAppoint(sessfirstname,sesslastname,sessregno,appdate,appointTime){
+function scheduleAppoint(sessemail,sessfirstname,sesslastname,sessregno,appdate,appointTime,coun_sn,coun_title,coun_firstname,coun_lastname){
     
     set(ref(db, 'appointments/' + appdate+'/'+appointTime), {
         sn:1,
-        student:sessfirstname+sesslastname,
+        student:sessfirstname+" "+sesslastname,
         time:appointTime,
         dates:appdate,
         regno:sessregno,
+        counsellor_sn:coun_sn,
+        assigned_counsellor:coun_title+" "+coun_firstname+" "+coun_lastname,
+        attend_to_status:0,
+        cancel_status:0,
         status:1
     }).then(()=>{
         alert("Appointment Scheduled Successfully");
-        window.open('appointfromdate.html?appdate='+appdate, "_self");
+        //window.open('appointfromdate.html?appdate='+appdate, "_self");
+        window.open('studentcp.html?firstname='+sessfirstname+'&lastname='+sesslastname+'&email='+sessemail, "_self");
     }).catch(()=>{
         alert("Error: Student Not Successfully Added");
     });

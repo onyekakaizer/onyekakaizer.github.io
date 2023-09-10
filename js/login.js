@@ -45,7 +45,9 @@
 
     else{
 
+      
       var loginkey = md5(getEmail+getPassword);
+console.log(loginkey);
 
       const que = query(ref(db,getLogintype),orderByChild('loginkey'),equalTo(loginkey));
 
@@ -61,8 +63,10 @@
             var lastname = childSnapshot.val().lastname;
             var email = childSnapshot.val().email;
             var regno = childSnapshot.val().regno;
+            var title = childSnapshot.val().title;
+            var sn = childSnapshot.val().sn;
 
-            console.log(lastname);
+            //console.log(lastname);
 
             if(getLogintype == "students"){
 
@@ -71,6 +75,7 @@
               sessionStorage.setItem("firstname", firstname);
               sessionStorage.setItem("lastname", lastname);
               sessionStorage.setItem("regno", regno);
+              sessionStorage.setItem("email", email);
 
               window.open('studentcp.html?firstname='+firstname+'&lastname='+lastname+'&email='+email, "_self");
 
@@ -80,9 +85,16 @@
             else if(getLogintype == "staff"){
 
               sessionStorage.setItem("key", loginkey);
-              sessionStorage.setItem("u_level", u_level);
+              sessionStorage.setItem("title", title);
+              sessionStorage.setItem("firstname", firstname);
+              sessionStorage.setItem("lastname", lastname);
+              sessionStorage.setItem("email", email);
+              sessionStorage.setItem("title", title);
+              sessionStorage.setItem("sn", sn);
 
-              window.open("staffcp.html", "_self");
+              //console.log(firstname);
+              //window.open("staffcp.html", "_self");
+              window.open('staffcp.html?firstname='+firstname+'&lastname='+lastname+'&email='+email+'&title='+title, "_self");
 
             }
 

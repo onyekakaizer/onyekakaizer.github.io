@@ -60,7 +60,7 @@ function  addStaffersForDisplay(staffers){
     staffers.forEach(element => {
 
     sendToDisplay(element.sn, element.department,element.email, element.faculty, 
-        element.firstname, element.lastname, element.loginkey, element.password, element.staffno, element.status);
+        element.firstname, element.lastname, element.loginkey, element.password, element.staffno, element.status,element.title);
 
   });
 }
@@ -89,13 +89,13 @@ var staffers_div = document.getElementById('staffers_div');
 var radioId = 1;
 
 function sendToDisplay(sn, department,email, faculty, firstname, lastname, loginkey, 
-    password, staffno, status){
+    password, staffno, status,title){
 
 
         let text_darkA = document.createElement('a');
         text_darkA.classList.add ('text-dark');
         text_darkA.setAttribute("href", 'stud_councillorprofileview.html?sn='+sn+'&department='+department+'&email='+email+'&faculty='
-               +faculty+'&firstname='+firstname+'&lastname='+lastname+'&staffno='+staffno);
+               +faculty+'&firstname='+firstname+'&lastname='+lastname+'&staffno='+staffno+'&title='+title);
 
         let osahan_gift_card_item1Div = document.createElement('div');
         osahan_gift_card_item1Div.classList.add ('osahan-gift', 'card_item1', 'align-items-center', 'row', 'm-0', 'bg-white', 'shadow-sm', 'border-rad8', 'mb-3', 'align-items-center');
@@ -226,7 +226,7 @@ function getAppointments(){
 function  getAppointmentsForDisplay(appointments){
   appointments.forEach(element => {
 
-    sendToAppointListDisplay(element.sn, element.student,element.dates, element.time, element.status);
+    sendToAppointListDisplay(element.sn, element.student,element.dates, element.time, element.assigned_counsellor, element.status);
 
 });
 }
@@ -235,14 +235,14 @@ function  getAppointmentsForDisplay(appointments){
 var appointlist = document.getElementById('appointlist');
 //var bg_white = document.getElementById('bg_white');
 
-function sendToAppointListDisplay(sn, student,dates, time, status){
+function sendToAppointListDisplay(sn, student,dates, time, assigned_counsellor, status){
 
 
     let messenger_bg_warningDiv = document.createElement('div');
     messenger_bg_warningDiv.classList.add ('messenger', 'bg-warning', 'shadow-sm', 'p-3', 'd-flex', 'align-items-center', 'rounded-1', 'mb-2');
 
     let icofont_support_mr_3italics = document.createElement('i');
-    icofont_support_mr_3italics.classList.add ('icofont-support', 'mr-3', 'h5', 'mb-0', 'text-danger');
+    icofont_support_mr_3italics.classList.add ('icofont-support', 'mr-3', 'h5', 'mb-0', 'text-success');
 
     messenger_bg_warningDiv.appendChild(icofont_support_mr_3italics);
 
@@ -250,7 +250,7 @@ function sendToAppointListDisplay(sn, student,dates, time, status){
     mb_small_0P.classList.add ('small', 'mb-0');
 
 
-    let timenode = document.createTextNode(time);
+    let timenode = document.createTextNode(dates+ " "+time);
     mb_small_0P.appendChild(timenode);
 
     let br = document.createElement("br");
@@ -259,6 +259,12 @@ function sendToAppointListDisplay(sn, student,dates, time, status){
 
     let appointeenode = document.createTextNode("Scheduled By : "+student);
     mb_small_0P.appendChild(appointeenode);
+
+    let br2 = document.createElement("br");
+    mb_small_0P.appendChild(br2);
+
+    let counselenode = document.createTextNode("Councellor : "+assigned_counsellor);
+    mb_small_0P.appendChild(counselenode);
 
 
     messenger_bg_warningDiv.appendChild(mb_small_0P);
