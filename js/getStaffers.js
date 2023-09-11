@@ -1,7 +1,7 @@
   
   // Import the functions you need from the SDKs you need
   import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-  import { getDatabase, set, get, ref ,query, child, onValue, limitToFirst, orderByChild,equalTo } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
+  import { getDatabase, set, get, ref ,query, child, onValue, limitToFirst, orderByChild,equalTo,remove } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
 
   // TODO: Add SDKs for Firebase products that you want to use
   // https://firebase.google.com/docs/web/setup#available-libraries
@@ -226,7 +226,7 @@ function getAppointments(){
 function  getAppointmentsForDisplay(appointments){
   appointments.forEach(element => {
 
-    sendToAppointListDisplay(element.sn, element.student,element.dates, element.time, element.assigned_counsellor, element.status);
+    sendToAppointListDisplay(element.sn, element.student,element.dates, element.time, element.assigned_counsellor, element.appointmentid, element.status);
 
 });
 }
@@ -235,7 +235,7 @@ function  getAppointmentsForDisplay(appointments){
 var appointlist = document.getElementById('appointlist');
 //var bg_white = document.getElementById('bg_white');
 
-function sendToAppointListDisplay(sn, student,dates, time, assigned_counsellor, status){
+function sendToAppointListDisplay(sn, student,dates, time, assigned_counsellor, appointmentid,status){
 
 
     let messenger_bg_warningDiv = document.createElement('div');
@@ -266,6 +266,100 @@ function sendToAppointListDisplay(sn, student,dates, time, assigned_counsellor, 
     let counselenode = document.createTextNode("Councellor : "+assigned_counsellor);
     mb_small_0P.appendChild(counselenode);
 
+    let br3 = document.createElement("br");
+    mb_small_0P.appendChild(br3);
+
+
+    let d_flex_justify_content = document.createElement('div');
+    d_flex_justify_content.classList.add ('d-flex', 'justify-content-between');
+
+    let cancelbtn = document.createElement("button");
+    cancelbtn.classList.add ('btn', 'btn-primary');
+    cancelbtn.type = "button";
+    cancelbtn.innerHTML = "Cancel";
+    cancelbtn.onclick = function () {
+      
+      if (confirm("Are you sure you want to cancel this appointment?")) {
+        
+      const que = remove(ref(db,'appointments/'+dates+'/'+time));
+
+        var firstname = sessionStorage.getItem("firstname");
+        var lastname = sessionStorage.getItem("lastname");
+        var email = sessionStorage.getItem("email");
+
+        window.open('studentcp.html?firstname='+firstname+'&lastname='+lastname+'&email='+email, "_self");
+      } else {
+        // Code to cancel the deletion
+      }
+
+
+
+
+     // remove(ref(getDatabase(), `users/${userId}/node/${node.id}`))
+
+    };
+
+
+    d_flex_justify_content.appendChild(cancelbtn);
+
+    var sp11 = document.createTextNode("\u00A0");
+    var sp12 = document.createTextNode("\u00A0");
+    d_flex_justify_content.appendChild(sp11);
+    d_flex_justify_content.appendChild(sp12);
+
+    let reschedulebtn = document.createElement("button");
+    reschedulebtn.classList.add ('btn', 'btn-danger');
+    reschedulebtn.type = "button";
+    reschedulebtn.innerHTML = "Re-Schedule";
+    reschedulebtn.onclick = function () {
+
+
+
+      const que = query(ref(db,"appointments"),orderByChild('appointmentid'),equalTo(appointmentid));
+
+      // console.log(que);
+
+      get(que).then((snapshot) => {
+        if (snapshot.exists()) {
+
+          snapshot.forEach(function (childSnapshot) {
+
+            var value = childSnapshot.val();
+            var assigned_counsellor = childSnapshot.val().assigned_counsellor;
+            // var lastname = childSnapshot.val().lastname;
+            // var email = childSnapshot.val().email;
+            // var regno = childSnapshot.val().regno;
+            // var title = childSnapshot.val().title;
+            // var sn = childSnapshot.val().sn;
+
+        });
+
+        //console.log(snapshot.val().name);
+        } else {
+          alert("Error: Invalid");
+        }
+      }).catch((error) => {
+        console.error(error);
+      });
+
+
+
+
+
+
+      //alert(appointmentid);
+
+      //window.open('studentcp.html?firstname='+firstname+'&lastname='+lastname+'&email='+email, "_self");
+      window.open('reshedule.html?assigned_counsellor='+assigned_counsellor+'&appointmentid='+appointmentid, "_self");
+
+
+    };
+
+
+    d_flex_justify_content.appendChild(reschedulebtn);
+
+
+    mb_small_0P.appendChild(d_flex_justify_content);
 
     messenger_bg_warningDiv.appendChild(mb_small_0P);
 

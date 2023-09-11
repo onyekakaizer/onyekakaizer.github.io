@@ -212,8 +212,23 @@ function scheduleAppointment(appointTime){
 
 }
 
+function makeid(length) {
+  let result = '';
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const charactersLength = characters.length;
+  let counter = 0;
+  while (counter < length) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    counter += 1;
+  }
+  return result;
+}
+
+
 
 function scheduleAppoint(sessemail,sessfirstname,sesslastname,sessregno,appdate,appointTime,coun_sn,coun_title,coun_firstname,coun_lastname){
+
+    var appointmentid = makeid(8);
     
     set(ref(db, 'appointments/' + appdate+'/'+appointTime), {
         sn:1,
@@ -225,6 +240,7 @@ function scheduleAppoint(sessemail,sessfirstname,sesslastname,sessregno,appdate,
         assigned_counsellor:coun_title+" "+coun_firstname+" "+coun_lastname,
         attend_to_status:0,
         cancel_status:0,
+        appointmentid:appointmentid,
         status:1
     }).then(()=>{
         alert("Appointment Scheduled Successfully");
